@@ -28,6 +28,7 @@ class SymbolTable {
         st.put("system", TokenType.SYSTEM);
         st.put("self", TokenType.SELF);
         st.put("args", TokenType.ARGS);
+        st.put("while", TokenType.WHILE);
 
         // operators
         st.put("!", TokenType.NOT);
@@ -40,8 +41,8 @@ class SymbolTable {
         st.put("<=", TokenType.LOWER_EQ);
         st.put(">=", TokenType.GREATER_EQ);
         // operadores aritiméticos
-        st.put("+", TokenType.ADD);
-        st.put("=", TokenType.SUB);
+        st.put("+", TokenType.SUM);
+        st.put("-", TokenType.SUB);
         st.put("/", TokenType.DIV);
         st.put("*", TokenType.MULT);
         st.put("%", TokenType.MOD);

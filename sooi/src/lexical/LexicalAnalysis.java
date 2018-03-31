@@ -39,8 +39,9 @@ public class LexicalAnalysis implements AutoCloseable {
         Lexeme lex = new Lexeme("", TokenType.END_OF_FILE);
         
         // fica aqui durante um lexema inteiro
-        while (estado != 9 || estado != 10){
+        while (estado != 9 && estado != 10){
             int c = input.read(); // ler cada caracter do código
+            //System.out.println("[" + estado + ", \'" + ((char) c) + "\']");
             
             switch(estado){
                 case 1:
@@ -62,9 +63,9 @@ public class LexicalAnalysis implements AutoCloseable {
                     }
                     
                     // numeros
-                    //else if (c >= '0' && c <= '9'){
                     else if (Character.isDigit(c)){
                         lex.type = TokenType.NUMBER;
+                        lex.token += (char)c;
                         estado = 5;
                     }
                     
@@ -76,6 +77,7 @@ public class LexicalAnalysis implements AutoCloseable {
                     
                     // letras
                     else if (Character.isLetter(c)){
+                        lex.type = TokenType.NAME;
                         lex.token += (char) c; // concatena
                         estado = 7; 
                     }
@@ -95,63 +97,84 @@ public class LexicalAnalysis implements AutoCloseable {
 
                     // pontuação
                     else if(c == '*'){
+                        lex.token += (char) c;
                         lex.type = TokenType.MULT;
                     }
                     else if (c == '('){
+                        lex.token += (char) c;
                         lex.type = TokenType.OPEN_PAR;
                         estado = 9;
                     }
                     else if (c == ')'){
+                        lex.token += (char) c;
                         lex.type = TokenType.CLOSE_PAR;
                         estado = 9;
                     }
                     else if (c == '{'){
+                        lex.token += (char) c;
                         lex.type = TokenType.OPEN_CUR;
                         estado = 9;
                     }
                     else if (c == '}'){
+                        lex.token += (char) c;
                         lex.type = TokenType.CLOSE_CUR;
                         estado = 9;
                     }
                     else if (c == ','){
+                        lex.token += (char) c;
                         lex.type = TokenType.COMMA;
                         estado = 9;
                     }
                     else if (c == '.'){
+                        lex.token += (char) c;
                         lex.type = TokenType.DOT;
                         estado = 9;
                     }
                     else if (c == ';'){
+                        lex.token += (char) c;
                         lex.type = TokenType.DOT_COMMA;
                         estado = 9;
                     }
                     else if (c == '&'){
+                        lex.token += (char) c;
                         lex.type = TokenType.AND;
                         estado = 9;
                     }
                     else if (c == '|'){
+                        lex.token += (char) c;
                         lex.type = TokenType.OR;
                         estado = 9;
                     }
                     else if (c == '%'){
+                        lex.token += (char) c;
                         lex.type = TokenType.MOD;
                         estado = 9;
                     }
                     else if (c == '+'){
-                        lex.type = TokenType.ADD;
+                        lex.token += (char) c;
+                        lex.type = TokenType.SUM;
                         estado = 9;
                     }
                     else if (c == '-'){
+                        lex.token += (char) c;
                         lex.type = TokenType.SUB;
                         estado = 9;
+                    }
+                    else {
+                        lex.token += (char)c;
+                        lex.type = TokenType.INVALID_TOKEN;
                     }
                     break;
 
                 case 2:
                     if (c == '*'){
+                        lex.token = lex.token.substring(0, lex.token.length() - 1);
                         estado = 3;
                     }
-                    else estado = 9;
+                    else{
+                        input.unread(c);
+                        estado = 9;
+                    }
                     break;
 
                 case 3:
@@ -164,37 +187,56 @@ public class LexicalAnalysis implements AutoCloseable {
                     else if (c == '*') estado = 4;
                     else estado = 3;
                     break;
-
-                case 5:
-                    if (Character.isLetter(c)) estado = 5;
-                    else estado = 10;
+                    
+                case 5: 
+                    if (Character.isDigit(c)){
+                        lex.token += (char) c;
+                        estado = 5;
+                    }
+                    else if(c != -1) input.unread(c);
+                    
+                    estado = 10;
                     break;
 
                 case 6:
-                    if (c == '=') estado = 9;
-                    else estado = 9;
+                    if (c == '=') lex.token += (char)c;
+                    else if(c != -1) input.unread(c);
+                    
+                    estado = 9;
                     break;
                     
                 case 7:
-                    if (Character.isDigit(c)) estado = 7;
-                    else estado = 9;
+                    if (!Character.isDigit(c) && !Character.isLetter(c)){
+                        input.unread(c);
+                        estado = 9;
+                    }
+                    else{
+                        lex.token += (char)c;
+                        estado = 7;
+                    }
                     break;
                     
                 case 8:
-                    if (c == '\"') estado = 10;
-                    else estado = 8;
-                    break;
-                    
-                case 9:
-                    if (st.contains(lex.type.name())){
-                        lex.type = st.find(lex.type.name());
+                    if (c == '\"'){
+                        estado = 10;
                     }
+                    else{
+                        lex.token += (char)c;
+                        estado = 8;
+                    }
+                    break;
                 default:
                     break;
             }
-            
         }
-        
+        if (estado == 9) {
+            if (st.contains(lex.token)) {
+                lex.type = st.find(lex.token);
+            } 
+            else {
+                lex.type = TokenType.NAME;
+            }
+        }
         return lex;
     }
 }

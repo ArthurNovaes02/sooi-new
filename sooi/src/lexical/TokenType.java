@@ -24,6 +24,7 @@ public enum TokenType {
     SYSTEM,
     SELF,
     ARGS,
+    WHILE,
 
     // operators
     NOT,
@@ -36,7 +37,7 @@ public enum TokenType {
     LOWER_EQ,
     GREATER_EQ,
     // operadores aritiméticos
-    ADD,
+    SUM,
     SUB,
     DIV,
     MULT,
