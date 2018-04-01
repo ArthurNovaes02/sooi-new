@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/lexical/LexicalAnalysis.java</file>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/lexical/Lexeme.java</file>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/sooi.java</file>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/lexical/TokenType.java</file>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/syntatic/SyntaticAnalysis.java</file>
+            <file>file:/home/arthur/Documentos/CEFET/4%20período/LLP/TP1/sooi-git/sooi-new/sooi/src/lexical/SymbolTable.java</file>
+        </group>
     </open-files>
 </project-private>

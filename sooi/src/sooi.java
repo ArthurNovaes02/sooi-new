@@ -16,7 +16,7 @@ public class sooi {
         }
 
         try (LexicalAnalysis l = new LexicalAnalysis(args[0])) {
-//            SyntaticAnalysis s = new SyntaticAnalysis(l);
+            SyntaticAnalysis s = new SyntaticAnalysis(l);
 
             // O código a seguir é dado para testar o interpretador.
             // TODO: descomentar depois que o analisador léxico estiver OK.
