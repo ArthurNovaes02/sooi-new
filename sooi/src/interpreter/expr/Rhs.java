@@ -1,13 +1,14 @@
-package interpreter.command;
+package interpreter.expr;
 
 import interpreter.util.Instance;
 import interpreter.util.Arguments;
+import interpreter.value.Value;
 
-public abstract class Command {
+public abstract class Rhs {
 
     private int line;
 
-    protected Command(int line) {
+    protected Rhs(int line) {
         this.line = line;
     }
 
@@ -15,6 +16,6 @@ public abstract class Command {
         return line;
     }
 
-    public abstract void execute(Instance instance, Arguments args);
+    public abstract Value<?> rhs(Instance self, Arguments args);
 
 }
