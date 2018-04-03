@@ -16,15 +16,14 @@ public class sooi {
         }
 
         try (LexicalAnalysis l = new LexicalAnalysis(args[0])) {
-            SyntaticAnalysis s = new SyntaticAnalysis(l);
 
             // O código a seguir é dado para testar o interpretador.
             // TODO: descomentar depois que o analisador léxico estiver OK.
-            /*
+            SyntaticAnalysis s = new SyntaticAnalysis(l);
             Command c = s.start();
-            c.execute();
-            */
+            c.execute(null, null);
 
+            /*
             // O código a seguir é usado apenas para testar o analisador léxico.
             // TODO: depois de pronto, comentar o código abaixo.
             Lexeme lex;
@@ -43,6 +42,7 @@ public class sooi {
                     System.out.printf("(\"%s\", %s)\n", lex.token, lex.type);
                     break;
             }
+            */
         } catch (Exception e) {
             System.err.println("Internal error: " + e.getMessage());
         }
