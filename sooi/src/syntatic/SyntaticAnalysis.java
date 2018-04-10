@@ -11,6 +11,7 @@ import lexical.LexicalAnalysis;
 
 import interpreter.command.Command;
 import interpreter.command.CommandsBlock;
+import interpreter.expr.AccessExpr;
 import interpreter.expr.ConstExpr;
 import interpreter.expr.Expr;
 import interpreter.expr.FunctionCallExpr;
@@ -125,7 +126,7 @@ public class SyntaticAnalysis {
         AssignCommand ac = null;
         
         if (current.type == TokenType.ASSIGN) {
-            procAssign();
+            ac = procAssign(path);
         } 
         else{
             int line = lex.getLine();
@@ -151,9 +152,13 @@ public class SyntaticAnalysis {
         return path;
     }
     //<assign> ::= '=' <rhs>
-    private void procAssign() throws IOException {
+    private AssignCommand procAssign(AccessPath path) throws IOException {
+        int line = lex.getLine();
         matchToken(TokenType.ASSIGN);
-        procRhs();
+        Rhs rsh = procRhs();
+        
+        AssignCommand ac = new AssignCommand(path, rsh, line);
+        return ac;
     }
     //<call> ::= '(' [ <rhs> { ',' <rhs> } ] ')'
     private FunctionCallExpr procCall(AccessPath path) throws IOException {
@@ -288,10 +293,18 @@ public class SyntaticAnalysis {
             matchToken(TokenType.CLOSE_PAR);
         }
         else{
+            int line = lex.getLine();
             AccessPath path = procAccess();
+            
             if (current.type == TokenType.OPEN_PAR) {
-                procCall(path);
+                e = procCall(path);
             }
+            
+            else{
+                e = new AccessExpr(path, line);
+            }
+            
+            
         }
         return e;
     }

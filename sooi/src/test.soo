@@ -1,1 +1,4 @@
-system.println(12);
+/*a = system.read("Entre com um numero: ");*/
+a.b=2;
+system.println(a.b.c);
+/*system.println(a.b);*/
