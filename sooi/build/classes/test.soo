@@ -1,4 +1,11 @@
 /*a = system.read("Entre com um numero: ");*/
-a.b=2;
+a.b.c=2;
 system.println(a.b.c);
-/*system.println(a.b);*/
+
+array.add = function {
+  system.set(self, ("element" + self.size), args.arg1);
+  array.size = array.size + 1;
+}
+
+/*system.println(a.b.c);*/
+

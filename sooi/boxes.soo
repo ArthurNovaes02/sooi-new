@@ -1,0 +1,22 @@
+box.width = 10;
+box.height = 20;
+box.volume = function {
+  a = self.width * self.height;
+  return a;
+};
+
+box2 = system.clone(box);
+box2.width = 2;
+box2.height = 3;
+box2.price = 5;
+box2.cost = function {
+  b = self.volume() * self.price;
+  return b;
+};
+
+system.println("box: ");
+system.println("  volume: " + box.volume());
+
+system.println("box2: ");
+system.println("  volume: " + box2.volume());
+system.println("  cost: " + box2.cost());

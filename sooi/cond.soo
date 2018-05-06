@@ -1,0 +1,24 @@
+n = system.random(10, 20);
+m = system.random(10, 20);
+
+system.println("n: " + n);
+system.println("m: " + m);
+
+if (n < m) {
+  menor = n;
+  maior = m;
+} else {
+  menor = m;
+  maior = n;
+}
+
+system.println("menor: " + menor);
+system.println("maior: " + maior);
+
+system.println();
+
+i = menor;
+while (i <= maior) {
+  system.println("i: " + i);
+  i = i + 1;
+}

@@ -1,0 +1,9 @@
+a.attr = 10;
+
+b.test = function {
+  x = args.arg1;
+  x.attr = 20;
+};
+
+b.test(a);
+system.println(a.attr);
