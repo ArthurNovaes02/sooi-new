@@ -16,5 +16,4 @@ public class ConstExpr extends Expr {
     public Value<?> rhs(Instance self, Arguments args) {
         return value;
     }
-
 }

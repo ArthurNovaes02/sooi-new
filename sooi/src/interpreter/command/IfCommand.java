@@ -32,8 +32,14 @@ public class IfCommand extends Command{
     }
     
 
-    public void execute(Instance instance, Arguments args) {
-        //@TODO
+    public void execute(Instance self, Arguments args) {
+        
+        if(cond.expr(self, args)){
+            then.execute(self, args);
+        }
+        else{
+            else_.execute(self, args);
+        }
     }
     
 }

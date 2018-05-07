@@ -23,7 +23,7 @@ public class FunctionRhs extends Rhs{
     }
 
     public Value<?> rhs(Instance self, Arguments args) {
-        //@TODO
+        return funct;
     }
     
     

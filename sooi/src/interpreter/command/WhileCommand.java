@@ -23,8 +23,11 @@ public class WhileCommand extends Command{
         this.cmd = cmd;
     }
 
-    public void execute(Instance instance, Arguments args) {
-        //@TODO
+    public void execute(Instance self, Arguments args) {
+        
+        while(expr.expr(self, args)){
+            cmd.execute(self, args);
+        }
     }
     
 }

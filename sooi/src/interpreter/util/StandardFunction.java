@@ -27,6 +27,11 @@ public class StandardFunction extends Function{
     }
 
     public Value<?> call(Instance self, Arguments args) {
-        // @TODO
+        Value<?> v;
+        
+        cmds.execute(self, args);
+        v = ret.rhs(self, args);
+        
+        return v;
     }
 }

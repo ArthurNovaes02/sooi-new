@@ -7,6 +7,7 @@ package interpreter.expr;
 
 import interpreter.util.Arguments;
 import interpreter.util.Instance;
+import interpreter.value.IntegerValue;
 import interpreter.value.Value;
 
 /**
@@ -22,25 +23,32 @@ public class CompositeExpr extends Expr {
         super (line);
     }
 
-    // @TODO: converter rhs para int
     public Value<?> rhs(Instance self, Arguments args) {
+        IntegerValue iv1, iv2, iv3;
+        iv1 = (IntegerValue) left.rhs(self, args);      // conversao de tipos
+        iv2 = (IntegerValue) right.rhs(self, args);     // conversao de tipos
+        
         if (op == CompOp.Add){
-            return left.rhs(self, args) + right.rhs(self, args);
+            iv3 = new IntegerValue(iv1.value() + iv2.value());
+            return iv3;
         }
         
         else if (op == CompOp.Sub){
-            return left.rhs(self, args) - right.rhs(self, args);
+            iv3 = new IntegerValue(iv1.value() - iv2.value());
+            return iv3;
         }
         
         else if (op == CompOp.Div){
-            return left.rhs(self, args) / right.rhs(self, args);
+            iv3 = new IntegerValue(iv1.value() / iv2.value());
+            return iv3;
         }
         
         else if (op == CompOp.Mul){
-            return left.rhs(self, args) * right.rhs(self, args);
+            iv3 = new IntegerValue(iv1.value() * iv2.value());
+            return iv3;
         }
         
-        return;
+        iv3 = new IntegerValue(0);
+        return iv3;
     }
-    
 }

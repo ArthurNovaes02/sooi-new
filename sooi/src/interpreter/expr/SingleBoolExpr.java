@@ -10,6 +10,7 @@ import interpreter.expr.Expr;
 import interpreter.expr.RelOp;
 import interpreter.util.Arguments;
 import interpreter.util.Instance;
+import interpreter.value.IntegerValue;
 
 /**
  *
@@ -28,38 +29,40 @@ public class SingleBoolExpr extends BoolExpr{
     }
 
     public boolean expr(Instance self, Arguments args){
+        IntegerValue iv1, iv2;
+        iv1 = (IntegerValue) left.rhs(self, args);      // conversao de tipos
+        iv2 = (IntegerValue) right.rhs(self, args);     // conversao de tipos
+
         if(op == RelOp.Equal){
-            if(left.rhs(self, args) == right.rhs(self, args))
+            if(iv1.value()== iv2.value())
                 return true;
-        }
-        
-        //@TODO: converter rhs para int
-        
+        }        
+
         else if (op == RelOp.GreaterEqual){
-            if(left.rhs(self, args) >= right.rhs(self, args))
+            if(iv1.value() >= iv2.value())
                 return true;
         }
         
         else if (op == RelOp.GreaterThan){
-            if(left.rhs(self, args) > right.rhs(self, args))
+            if(iv1.value() > iv2.value())
                 return true;
         }
         
         else if (op == RelOp.LowerEqual){
-            if(left.rhs(self, args) <= right.rhs(self, args))
+            if(iv1.value() <= iv2.value())
                 return true;
         }
         
         else if (op == RelOp.LowerThan){
-            if(left.rhs(self, args) > right.rhs(self, args))
+            if(iv1.value() < iv2.value())
                 return true;
         }
         
         else if (op == RelOp.NotEqual){
-            if(left.rhs(self, args) != right.rhs(self, args))
+            if(iv1.value() != iv2.value())
                 return true;
         }
-        else
-            return false;
+        // eles
+        return false;
     }
 }
