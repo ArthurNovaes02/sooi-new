@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Memory {
 
-    private Map<String,Value<?>> memory;
+    protected Map<String,Value<?>> memory;
 
     protected Memory() {
         memory = new HashMap<String,Value<?>>();

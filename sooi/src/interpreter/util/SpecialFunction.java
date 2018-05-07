@@ -42,6 +42,7 @@ public class SpecialFunction extends Function {
                 set(args);
                 break;
             case Abort: // @TODO: conferir se e so isso
+                v = this.abort(args);
                 break;
             case Type:
                 v = this.type(args);
@@ -143,6 +144,21 @@ public class SpecialFunction extends Function {
         }
     }
     
+    private Value<?> abort(Arguments args){
+        if (args.contains("args1")) {
+            Value<?> v = args.getValue("args1");
+            if (v instanceof IntegerValue) {
+                IntegerValue iv = (IntegerValue) v;
+                System.out.print(v.value());
+            } else if (v instanceof StringValue) {
+                StringValue sv = (StringValue) v;
+                System.out.print(sv.value());
+            }
+        }
+        InterpreterError.abort("exit");
+        return IntegerValue.Zero;
+    }
+    
     private Value<?> type (Arguments args){
         if (args.contains("args1")) {
             Value<?> x = args.getValue("args1");
@@ -191,12 +207,16 @@ public class SpecialFunction extends Function {
         return IntegerValue.Zero;
     }
     
-    private Value<?> clone (Arguments args){
-        if (args.contains("args1")){
-            Object obj = args.getValue("args1");
-            
-            return (Value<?>) obj;
-        }
-        return IntegerValue.Zero;
+ private Value<?> clone(Arguments args) {
+        if (!args.contains("arg1"))
+            InterpreterError.abort("clone: primeiro argumento inexistente");
+
+        Value<?> v = args.getValue("arg1");
+        if (!(v instanceof InstanceValue))
+            InterpreterError.abort("clone: primeiro argumento não é instance");
+
+        Instance i = ((InstanceValue) v).value();
+        InstanceValue iv = new InstanceValue(i.dup());
+        return iv;
     }
 }

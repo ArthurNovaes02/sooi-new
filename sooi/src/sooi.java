@@ -21,7 +21,7 @@ public class sooi {
             // TODO: descomentar depois que o analisador léxico estiver OK.
             SyntaticAnalysis s = new SyntaticAnalysis(l);
             Command c = s.start();
-            c.execute(null, null);
+                c.execute(null, null);
 
             /*
             // O código a seguir é usado apenas para testar o analisador léxico.

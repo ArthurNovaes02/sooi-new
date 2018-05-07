@@ -78,50 +78,51 @@ public class SyntaticAnalysis {
         Command c = null;
         
         if (current.type == TokenType.IF) {
-            procIf(); //@TODO
+            c = procIf();
         } else if (current.type == TokenType.WHILE) {
-            procWhile(); //@TODO
+            c = procWhile();
         } else {
             c = procCmd();
         }
         return c;
     }
     //<if> ::= if '(' <boolexpr> ')' '{' <code> '}' [else '{' <code> '}' ]
-    private Command procIf() throws IOException { //@TODO
+    private Command procIf() throws IOException {
         Command c = null;
         Command e = null;
         Command i = null;
         BoolExpr b = null;
+        
         int line = lex.getLine();
         matchToken(TokenType.IF);
         matchToken(TokenType.OPEN_PAR);
-        b = procBoolExpr(); //@TODO
+        b = procBoolExpr();
         matchToken(TokenType.CLOSE_PAR);
         matchToken(TokenType.OPEN_CUR);
-        c = procCode(); //@TODO
+        c = procCode();
         matchToken(TokenType.CLOSE_CUR);
         i = new IfCommand(b, c, line);
         if (current.type == TokenType.ELSE) {
             matchToken(TokenType.ELSE);
             matchToken(TokenType.OPEN_CUR);
-            e = procCode(); //@TODO
+            e = procCode();
             matchToken(TokenType.CLOSE_CUR);
             i = new IfCommand(b, c, e, line);
         }
         return i;
     }
     //<while> ::= while '(' <boolexpr> ')' '{' <code> '}'
-    private Command procWhile() throws IOException { //@TODO
+    private Command procWhile() throws IOException {
         BoolExpr b = null;
         Command c = null;
         Command w = null;
         int line = lex.getLine();
         matchToken(TokenType.WHILE);
         matchToken(TokenType.OPEN_PAR);
-        b = procBoolExpr(); //@TODO
+        b = procBoolExpr();
         matchToken(TokenType.CLOSE_PAR);
         matchToken(TokenType.OPEN_CUR);
-        c = procCode(); //@TODO
+        c = procCode();
         matchToken(TokenType.CLOSE_CUR);
         w = new WhileCommand(b, c, line);
         return w;
@@ -138,7 +139,7 @@ public class SyntaticAnalysis {
         else{
             int line = lex.getLine();
             FunctionCallExpr fce = procCall(path);
-            ac = new AssignCommand(null, fce, line);
+            ac = new AssignCommand(path, fce, line);
         } 
         matchToken(TokenType.DOT_COMMA);
         
@@ -192,7 +193,7 @@ public class SyntaticAnalysis {
         return fce;
     }
     //<boolexpr> ::= [ '!' ] <cmpexpr> [ ('&' | '|') <boolexpr> ]
-    private BoolExpr procBoolExpr() throws IOException { //@TODO
+    private BoolExpr procBoolExpr() throws IOException {
         BoolOp op = null;
         BoolExpr b = null;
         BoolExpr left = null;
@@ -203,18 +204,18 @@ public class SyntaticAnalysis {
             left = new NotBoolExpr(procCmpExpr(), line);
         }
         else
-            left = procCmpExpr(); //@TODO
+            left = procCmpExpr();
         if(current.type == TokenType.AND 
             || current.type == TokenType.OR){
             if(current.type == TokenType.AND ){
                 matchToken(TokenType.AND);
                 op = BoolOp.And;
-                right = procBoolExpr(); //@TODO
+                right = procBoolExpr();
             }
             else{
                 matchToken(TokenType.OR);
                 op = BoolOp.Or;
-                right = procBoolExpr(); //@TODO
+                right = procBoolExpr();
             }
             b = new CompositeBoolExpr(left, op, right, line);
         }
@@ -223,20 +224,20 @@ public class SyntaticAnalysis {
         return b;
     }
     //<cmpexpr> ::= <expr> <relop> <expr>
-    private BoolExpr procCmpExpr() throws IOException { //@TODO
+    private BoolExpr procCmpExpr() throws IOException {
         BoolExpr b = null;
         Expr left = null;
         Expr right = null;
         RelOp op = null;
         int line = lex.getLine();
-        left = procExpr(); //@TODO
-        op = procRelop(); //@TODO
-        right = procExpr(); //@TODO
+        left = procExpr();
+        op = procRelop();
+        right = procExpr();
         b = new SingleBoolExpr(left, op, right, line);
         return b;
     }
     //<relop> ::= '==' | '!=' | '<' | '>' | '<=' | '>='
-    private RelOp procRelop() throws IOException { //@TODO
+    private RelOp procRelop() throws IOException {
         RelOp r = null;
         if(current.type == TokenType.EQUAL){
             matchToken(TokenType.EQUAL);
@@ -268,7 +269,7 @@ public class SyntaticAnalysis {
     private Rhs procRhs() throws IOException {
         Rhs rhs = null;
         if(current.type == TokenType.FUNCTION){
-            procFunction();
+            rhs = procFunction();
         }
         else{
             rhs = procExpr();
@@ -276,16 +277,28 @@ public class SyntaticAnalysis {
         return rhs;
     }
     //<function> ::= function '{' <code> [ return <rhs> ';' ] '}'
-    private void procFunction() throws IOException { //@TODO
+    private FunctionRhs procFunction() throws IOException {
+        CommandsBlock c = null;
+        Rhs rhs = null;
+        FunctionRhs funcRhs = null;
+        int line = lex.getLine();
+        
         matchToken(TokenType.FUNCTION);
         matchToken(TokenType.OPEN_CUR);
-        procCode(); //@TODO
+        
+        c = procCode();
         if(current.type == TokenType.RETURN){
             matchToken(TokenType.RETURN);
-            procRhs(); //@TODO
+            rhs = procRhs();
             matchToken(TokenType.DOT_COMMA);
+            funcRhs = new FunctionRhs(new FunctionValue(new StandardFunction(c, rhs)), line);
+        }
+        else{
+            funcRhs = new FunctionRhs(new FunctionValue(new StandardFunction(c)), line);
         }
         matchToken(TokenType.CLOSE_CUR);
+        
+        return funcRhs;
     }
     //<expr> ::= <term> { ('+' | '-') <term> }
     private Expr procExpr() throws IOException {
@@ -297,7 +310,7 @@ public class SyntaticAnalysis {
             } else {
                 matchToken(TokenType.SUB);
             }
-            procTerm(); //@TODO
+            e = procTerm();
         }
         return e;
     }
@@ -314,7 +327,7 @@ public class SyntaticAnalysis {
             } else {
                 matchToken(TokenType.MOD);
             }
-            procFactor(); //@TODO
+            e = procFactor();
         }
         return e;
     }
@@ -330,7 +343,7 @@ public class SyntaticAnalysis {
         }
         else if(current.type == TokenType.OPEN_PAR){
             matchToken(TokenType.OPEN_PAR);
-            procExpr(); //@TODO
+            e = procExpr();
             matchToken(TokenType.CLOSE_PAR);
         }
         else{
