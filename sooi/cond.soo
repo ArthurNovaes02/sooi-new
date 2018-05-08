@@ -4,6 +4,7 @@ m = system.random(10, 20);
 system.println("n: " + n);
 system.println("m: " + m);
 
+/*
 if (n < m) {
   menor = n;
   maior = m;
@@ -21,4 +22,4 @@ i = menor;
 while (i <= maior) {
   system.println("i: " + i);
   i = i + 1;
-}
+}*/

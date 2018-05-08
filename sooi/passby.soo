@@ -1,4 +1,5 @@
-a.attr = 10;
+a.attr = 15;
+
 
 b.test = function {
   x = args.arg1;
@@ -6,4 +7,6 @@ b.test = function {
 };
 
 b.test(a);
+
+
 system.println(a.attr);

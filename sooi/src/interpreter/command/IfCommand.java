@@ -34,11 +34,11 @@ public class IfCommand extends Command{
 
     public void execute(Instance self, Arguments args) {
         
-        if(cond.expr(self, args)){
+        boolean value = cond.expr(self, args);
+        if(value){
             then.execute(self, args);
-        }
-        else{
-            else_.execute(self, args);
+            if(else_ != null)
+                else_.execute(self, args);
         }
     }
     

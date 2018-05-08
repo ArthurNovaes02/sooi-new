@@ -39,9 +39,9 @@ public class SpecialFunction extends Function {
                 v = this.get(args);
                 break;
             case Set:
-                set(args);
+                v = set(args);
                 break;
-            case Abort: // @TODO: conferir se e so isso
+            case Abort:
                 v = this.abort(args);
                 break;
             case Type:
@@ -125,23 +125,27 @@ public class SpecialFunction extends Function {
     
     private Value<?> get(Arguments args){
         if (args.contains("args1") && args.contains("args2")){
-            Object obj = args.getValue("args1");
+            Value<?> v = args.getValue("arg1");
             StringValue name = (StringValue)args.getValue("args2");
             
-            // @TODO:
-            return name;
+            Instance i = ((InstanceValue) v).value();
+            
+            return i.getValue(name.value());
         }
         return IntegerValue.Zero;
     }
     
-    private void set(Arguments args){
+    private Value<?> set(Arguments args){
         if (args.contains("args1") && args.contains("args2") && args.contains("args3")){
-            Object obj = args.getValue("args1");
+            Value<?> v = args.getValue("arg1");
             StringValue name = (StringValue)args.getValue("args2");
             Value<?> value = args.getValue("args3");
             
-            // @TODO
+            Instance i = ((InstanceValue) v).value();
+            
+            i.setValue(name.value(), value);
         }
+        return IntegerValue.Zero;
     }
     
     private Value<?> abort(Arguments args){

@@ -1,2 +1,6 @@
 a = 10;
+b = 12;
+
 system.println(a);
+system.println(b);
+/*system.print(a+1);*/
