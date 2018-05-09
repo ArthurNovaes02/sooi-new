@@ -21,6 +21,9 @@ public class CompositeExpr extends Expr {
     
     public CompositeExpr(Expr left, CompOp op, Expr right, int line){
         super (line);
+        this.left = left;
+        this.right = right;
+        this.op = op;
     }
 
     public Value<?> rhs(Instance self, Arguments args) {
@@ -28,27 +31,25 @@ public class CompositeExpr extends Expr {
         iv1 = (IntegerValue) left.rhs(self, args);      // conversao de tipos
         iv2 = (IntegerValue) right.rhs(self, args);     // conversao de tipos
         
-        if (op == CompOp.Add){
-            iv3 = new IntegerValue(iv1.value() + iv2.value());
-            return iv3;
+        switch (op) {
+            case Add:
+                iv3 = new IntegerValue(iv1.value() + iv2.value());
+                break;
+            case Sub:
+                iv3 = new IntegerValue(iv1.value() - iv2.value());
+                break;
+            case Div:
+                iv3 = new IntegerValue(iv1.value() / iv2.value());
+                break;
+            case Mul:
+                iv3 = new IntegerValue(iv1.value() * iv2.value());
+                break;
+            default:
+                iv3 = new IntegerValue(0);
+                break;
         }
         
-        else if (op == CompOp.Sub){
-            iv3 = new IntegerValue(iv1.value() - iv2.value());
-            return iv3;
-        }
-        
-        else if (op == CompOp.Div){
-            iv3 = new IntegerValue(iv1.value() / iv2.value());
-            return iv3;
-        }
-        
-        else if (op == CompOp.Mul){
-            iv3 = new IntegerValue(iv1.value() * iv2.value());
-            return iv3;
-        }
-        
-        iv3 = new IntegerValue(0);
+        System.out.println("passou" + iv3.value());
         return iv3;
     }
 }

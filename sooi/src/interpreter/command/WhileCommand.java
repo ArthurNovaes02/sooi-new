@@ -24,8 +24,9 @@ public class WhileCommand extends Command{
     }
 
     public void execute(Instance self, Arguments args) {
-        
-        while(expr.expr(self, args)){
+        boolean value = expr.expr(self, args);
+
+        while(value){
             cmd.execute(self, args);
         }
     }

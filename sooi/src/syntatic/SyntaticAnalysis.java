@@ -198,6 +198,7 @@ public class SyntaticAnalysis {
         BoolExpr b = null;
         BoolExpr left = null;
         BoolExpr right = null;
+        
         int line = lex.getLine();
         if (current.type == TokenType.NOT) {
             matchToken(TokenType.NOT);
@@ -205,18 +206,17 @@ public class SyntaticAnalysis {
         }
         else
             left = procCmpExpr();
-        if(current.type == TokenType.AND 
-            || current.type == TokenType.OR){
-            if(current.type == TokenType.AND ){
-                matchToken(TokenType.AND);
-                op = BoolOp.And;
-                right = procBoolExpr();
-            }
-            else{
-                matchToken(TokenType.OR);
-                op = BoolOp.Or;
-                right = procBoolExpr();
-            }
+        
+        if(current.type == TokenType.AND ){
+            matchToken(TokenType.AND);
+            op = BoolOp.And;
+            right = procBoolExpr();
+            b = new CompositeBoolExpr(left, op, right, line);
+        }
+        else if (current.type == TokenType.OR) {
+            matchToken(TokenType.OR);
+            op = BoolOp.Or;
+            right = procBoolExpr();
             b = new CompositeBoolExpr(left, op, right, line);
         }
         else

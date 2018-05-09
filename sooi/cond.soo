@@ -1,8 +1,27 @@
+/*
 n = system.random(10, 20);
 m = system.random(10, 20);
+*/
 
-system.println("n: " + n);
-system.println("m: " + m);
+/*a.s = 10;*/
+b = 10 + 2;
+
+/*while (b > 1){*/
+
+/*  b = b - 2;*/
+  system.println("b: " + b);
+/*}*/
+
+/*system.println("a.s: " + a.s);*/
+/*system.println("m: ");
+
+/*
+
+
+
+
+
+
 
 /*
 if (n < m) {

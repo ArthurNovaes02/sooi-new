@@ -33,13 +33,12 @@ public class IfCommand extends Command{
     
 
     public void execute(Instance self, Arguments args) {
-        
         boolean value = cond.expr(self, args);
-        if(value){
+
+            if(value)
             then.execute(self, args);
-            if(else_ != null)
+        else if (else_ != null)
                 else_.execute(self, args);
-        }
     }
     
 }

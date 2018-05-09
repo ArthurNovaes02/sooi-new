@@ -17,6 +17,12 @@ public class AssignCommand extends Command {
         this.lhs = lhs;
         this.rhs = rhs;
     }
+    
+    public AssignCommand(Rhs rhs, int line) {
+        super(line);
+
+        this.rhs = rhs;
+    }
 
     public void execute(Instance self, Arguments args) {
         Value<?> value = rhs.rhs(self, args);

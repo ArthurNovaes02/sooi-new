@@ -65,8 +65,8 @@ public class SpecialFunction extends Function {
     }
 
     private Value<?> print(Arguments args) {
-        if (args.contains("args1")) {
-            Value<?> v = args.getValue("args1");
+        if (args.contains("arg1")) {
+            Value<?> v = args.getValue("arg1");
             if (v instanceof IntegerValue) {
                 IntegerValue iv = (IntegerValue) v;
                 System.out.print(v.value());
@@ -105,14 +105,14 @@ public class SpecialFunction extends Function {
     private Value<?> random (Arguments args){
         
         // so entra na condicao se tiver dois arguementos
-        if (args.contains("args1") && args.contains("args2")){
+        if (args.contains("arg1") && args.contains("arg2")){
             Random num = new Random();
             
             IntegerValue v;
-            IntegerValue arg2_Go = (IntegerValue)args.getValue("args2");
+            IntegerValue arg2_Go = (IntegerValue)args.getValue("arg2");
             IntegerValue arg2_Back = new IntegerValue(num.nextInt(arg2_Go.value()));
             
-            IntegerValue arg1_Int = (IntegerValue)args.getValue("args1");
+            IntegerValue arg1_Int = (IntegerValue)args.getValue("arg1");
 
             v = new IntegerValue(arg2_Back.value() + arg1_Int.value());
             
@@ -124,9 +124,9 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> get(Arguments args){
-        if (args.contains("args1") && args.contains("args2")){
+        if (args.contains("arg1") && args.contains("arg2")){
             Value<?> v = args.getValue("arg1");
-            StringValue name = (StringValue)args.getValue("args2");
+            StringValue name = (StringValue)args.getValue("arg2");
             
             Instance i = ((InstanceValue) v).value();
             
@@ -136,10 +136,10 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> set(Arguments args){
-        if (args.contains("args1") && args.contains("args2") && args.contains("args3")){
+        if (args.contains("arg1") && args.contains("arg2") && args.contains("arg3")){
             Value<?> v = args.getValue("arg1");
-            StringValue name = (StringValue)args.getValue("args2");
-            Value<?> value = args.getValue("args3");
+            StringValue name = (StringValue)args.getValue("arg2");
+            Value<?> value = args.getValue("arg3");
             
             Instance i = ((InstanceValue) v).value();
             
@@ -149,8 +149,8 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> abort(Arguments args){
-        if (args.contains("args1")) {
-            Value<?> v = args.getValue("args1");
+        if (args.contains("arg1")) {
+            Value<?> v = args.getValue("arg1");
             if (v instanceof IntegerValue) {
                 IntegerValue iv = (IntegerValue) v;
                 System.out.print(v.value());
@@ -164,8 +164,8 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> type (Arguments args){
-        if (args.contains("args1")) {
-            Value<?> x = args.getValue("args1");
+        if (args.contains("arg1")) {
+            Value<?> x = args.getValue("arg1");
             StringValue type = null;
             
             if (x instanceof IntegerValue) 
@@ -183,8 +183,8 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> length (Arguments args){
-        if (args.contains("args1")) {
-            StringValue str = (StringValue) args.getValue("args1");
+        if (args.contains("arg1")) {
+            StringValue str = (StringValue) args.getValue("arg1");
             
             // armazena em um IV o tamanho da string
             IntegerValue iv = new IntegerValue(str.value().length());
@@ -195,10 +195,10 @@ public class SpecialFunction extends Function {
     }
     
     private Value<?> substring (Arguments args){
-        if (args.contains("args1") && args.contains("args2") && args.contains("args3")){
-            StringValue str = (StringValue) args.getValue("args1");
-            IntegerValue i = (IntegerValue) args.getValue("args2");
-            IntegerValue f = (IntegerValue) args.getValue("args3");
+        if (args.contains("arg1") && args.contains("arg2") && args.contains("arg3")){
+            StringValue str = (StringValue) args.getValue("arg1");
+            IntegerValue i = (IntegerValue) args.getValue("arg2");
+            IntegerValue f = (IntegerValue) args.getValue("arg3");
             
             // peag a substring
             String sub = str.value().substring(i.value(), i.value() + f.value());
